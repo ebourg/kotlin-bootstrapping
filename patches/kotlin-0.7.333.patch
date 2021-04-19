@@ -1,0 +1,39 @@
+diff --git a/build.xml b/build.xml
+index ead08ac7288..d0008227890 100644
+--- a/build.xml
++++ b/build.xml
+@@ -613,7 +613,7 @@
+ 
+     <!-- builds redistributables from sources -->
+     <target name="dist"
+-            depends="clean,init,prepareDist,preloader,builtins,compiler,compilerSources,antTools,jdkAnnotations,androidSdkAnnotations,runtime,runtime_sources,jslib"/>
++            depends="clean,init,prepareDist,preloader,builtins,compiler,compilerSources,antTools,jdkAnnotations,androidSdkAnnotations,runtime,runtime_sources"/>
+ 
+     <!-- builds everything, but classes are reused from project out dir, doesn't run proguard and javadoc -->
+     <target name="dist_quick"
+diff --git a/libraries/stdlib/src/kotlin/io/JIO.kt b/libraries/stdlib/src/kotlin/io/JIO.kt
+index 2136380db87..83a273644f0 100644
+--- a/libraries/stdlib/src/kotlin/io/JIO.kt
++++ b/libraries/stdlib/src/kotlin/io/JIO.kt
+@@ -199,7 +199,7 @@ public fun Writer.buffered(bufferSize: Int = defaultBufferSize): BufferedWriter
+ public fun Reader.forEachLine(block: (String) -> Unit): Unit = useLines { lines -> lines.forEach(block) }
+ 
+ public inline fun <T> Reader.useLines(block: (Stream<String>) -> T): T =
+-        this.buffered().use { block(it.lines()) }
++        this.buffered().use { block(it.lineSequence()) }
+ 
+ /**
+  * Returns an iterator over each line.
+@@ -209,10 +209,10 @@ public inline fun <T> Reader.useLines(block: (Stream<String>) -> T): T =
+  * <br>
+  * We suggest you try the method useLines() instead which closes the stream when the processing is complete.
+  */
+-public fun BufferedReader.lines(): Stream<String> = LinesStream(this)
++public fun BufferedReader.lineSequence(): Stream<String> = LinesStream(this)
+ 
+ deprecated("Use lines() function which returns Stream<String>")
+-public fun BufferedReader.lineIterator(): Iterator<String> = lines().iterator()
++public fun BufferedReader.lineIterator(): Iterator<String> = lineSequence().iterator()
+ 
+ class LinesStream(val reader: BufferedReader) : Stream<String> {
+     override fun iterator(): Iterator<String> {

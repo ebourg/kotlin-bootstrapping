@@ -1,0 +1,46 @@
+diff --git a/build.xml b/build.xml
+index cf640ec135ef..774e089201af 100644
+--- a/build.xml
++++ b/build.xml
+@@ -16,7 +16,7 @@
+     <attribute name="script" />
+     <sequential>
+       <java failonerror="true" jar="${project.home}/lib/ant/lib/ant-launcher.jar" fork="true">
+-        <jvmarg line="-Xmx612m -XX:MaxPermSize=152m"/>
++        <jvmarg line="-Xmx4096M"/>
+ 
+         <arg line="&quot;-Dgant.script=@{script}&quot;"/>
+         <arg line="&quot;-Dteamcity.build.tempDir=${tmp.dir}&quot;"/>
+diff --git a/build/scripts/layouts.gant b/build/scripts/layouts.gant
+index 63b102725eee..07eda358ac8a 100644
+--- a/build/scripts/layouts.gant
++++ b/build/scripts/layouts.gant
+@@ -323,13 +323,6 @@ public def layoutCommunityPlugins(String home) {
+       fileset(dir: "$home/plugins/maven/maven-server-api/lib")
+     }
+ 
+-    layoutPlugin("gradle") {
+-      jar("gradle.jar") {
+-        module("gradle")
+-      }
+-      fileset(dir: "$home/plugins/gradle/lib") { include(name: "*.jar") }
+-    }
+-
+     layoutPlugin("git4idea") {
+       jar("git4idea-rt.jar") {
+         module("git4idea-rt")
+diff --git a/java/java-psi-impl/src/com/intellij/psi/impl/compiled/StubBuildingVisitor.java b/java/java-psi-impl/src/com/intellij/psi/impl/compiled/StubBuildingVisitor.java
+index d65a00d165de..56b7ab22ec95 100644
+--- a/java/java-psi-impl/src/com/intellij/psi/impl/compiled/StubBuildingVisitor.java
++++ b/java/java-psi-impl/src/com/intellij/psi/impl/compiled/StubBuildingVisitor.java
+@@ -67,6 +67,10 @@ public class StubBuildingVisitor<T> extends ClassVisitor {
+   private PsiClassStub myResult;
+   private PsiModifierListStub myModList;
+ 
++  public StubBuildingVisitor(T classSource, InnerClassSourceStrategy<T> innersStrategy, StubElement parent, int access) {
++    this(classSource, innersStrategy, parent, access, null);
++  }
++
+   public StubBuildingVisitor(T classSource, InnerClassSourceStrategy<T> innersStrategy, StubElement parent, int access, String shortName) {
+     super(Opcodes.ASM4);
+     mySource = classSource;

@@ -1,0 +1,52 @@
+diff --git a/build.xml b/build.xml
+index 455ce077218..fce434fb729 100644
+--- a/build.xml
++++ b/build.xml
+@@ -22,7 +22,7 @@
+     <property name="java.target" value="1.6"/>
+ 
+     <path id="classpath">
+-        <fileset dir="${boostrap.compiler.home}" includes="lib/kotlin-runtime.jar"/>
++        <!--<fileset dir="${boostrap.compiler.home}" includes="lib/kotlin-runtime.jar"/>-->
+         <fileset dir="${idea.sdk}" includes="core/*.jar"/>
+         <fileset dir="${idea.sdk}" includes="lib/protobuf-2.5.0.jar"/>
+ 
+@@ -311,7 +311,6 @@
+         <cleandir dir="${output}/classes/compiler"/>
+ 
+         <javac2 destdir="${output}/classes/compiler" debug="true" debuglevel="lines,vars,source" includeAntRuntime="false"  target="${java.target}">
+-            <withKotlin/>
+             <src refid="compilerSources.path"/>
+             <classpath refid="classpath"/>
+         </javac2>
+diff --git a/runtime/src/jet/KotlinTraitImpl.java b/runtime/src/jet/KotlinTraitImpl.java
+new file mode 100644
+index 00000000000..1cfe75cb242
+--- /dev/null
++++ b/runtime/src/jet/KotlinTraitImpl.java
+@@ -0,0 +1,25 @@
++/*
++ * Copyright 2010-2013 JetBrains s.r.o.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package jet;
++
++import java.lang.annotation.Retention;
++import java.lang.annotation.RetentionPolicy;
++
++@Retention(RetentionPolicy.RUNTIME)
++public @interface KotlinTraitImpl {
++    int abiVersion();
++}

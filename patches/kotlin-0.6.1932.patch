@@ -1,0 +1,33 @@
+diff --git a/build.xml b/build.xml
+index 82eb5d83af5..304f4d5484c 100644
+--- a/build.xml
++++ b/build.xml
+@@ -516,6 +516,7 @@
+ 
+         <cleandir dir="${output}/classes/stdlib"/>
+         <java classname="org.jetbrains.jet.cli.jvm.K2JVMCompiler" failonerror="true" fork="true">
++            <jvmarg value="-noverify"/>
+             <classpath>
+                 <path refid="classpath"/>
+                 <pathelement location="${kotlin-home}/lib/kotlin-compiler.jar"/>
+@@ -587,7 +588,7 @@
+ 
+     <!-- builds redistributables from sources -->
+     <target name="dist"
+-            depends="clean,init,prepareDist,preloader,compiler,compilerSources,antTools,jdkAnnotations,androidSdkAnnotations,runtime,runtime_sources,jslib,j2kConverter"/>
++            depends="clean,init,prepareDist,preloader,compiler,compilerSources,antTools,jdkAnnotations,androidSdkAnnotations,runtime,runtime_sources"/>
+ 
+     <!-- builds everything, but classes are reused from project out dir, doesn't run proguard and javadoc -->
+     <target name="dist_quick"
+diff --git a/compiler/frontend/src/org/jetbrains/jet/lang/evaluate/OperationsMapGenerated.kt b/compiler/frontend/src/org/jetbrains/jet/lang/evaluate/OperationsMapGenerated.kt
+index 6443a7bb2de..4d5328c4406 100644
+--- a/compiler/frontend/src/org/jetbrains/jet/lang/evaluate/OperationsMapGenerated.kt
++++ b/compiler/frontend/src/org/jetbrains/jet/lang/evaluate/OperationsMapGenerated.kt
+@@ -101,7 +101,6 @@ private val binaryOperations: HashMap<BinaryOperationKey<*, *>, Pair<Function2<A
+     binaryOperation(BOOLEAN, BOOLEAN, "or", { a, b -> a.or(b) }, emptyBinaryFun),     
+     binaryOperation(BOOLEAN, ANY, "equals", { a, b -> a.equals(b) }, emptyBinaryFun),     
+     binaryOperation(BOOLEAN, BOOLEAN, "and", { a, b -> a.and(b) }, emptyBinaryFun),     
+-    binaryOperation(BOOLEAN, BOOLEAN, "compareTo", { a, b -> a.compareTo(b) }, emptyBinaryFun),     
+     binaryOperation(BYTE, BYTE, "minus", { a, b -> a.minus(b) }, { a, b -> a.subtract(b) }),     
+     binaryOperation(BYTE, CHAR, "minus", { a, b -> a.minus(b) }, emptyBinaryFun),     
+     binaryOperation(BYTE, DOUBLE, "minus", { a, b -> a.minus(b) }, emptyBinaryFun),     
