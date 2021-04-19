@@ -4,7 +4,7 @@
 
 .PHONY: bootstrap init clean
 
-bootstrap: init build/kotlin-0.8.409
+bootstrap: init build/kotlin-0.10.300
 
 init:
 	mkdir -p build dependencies
@@ -421,3 +421,209 @@ build/kotlin-0.8.409: build/kotlin-0.8.84
 	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
 	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.8.84 \
 	    && mv dist/kotlinc ../build/kotlin-0.8.409
+
+build/kotlin-0.8.418: build/kotlin-0.8.409
+	cd kotlin \
+	    && git reset --hard \
+	    && git clean -f \
+	    && git checkout build-0.8.418 \
+	    && git apply ../patches/kotlin-0.8.418.patch \
+	    && rm -Rf ideaSDK dependencies \
+	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
+	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/javac2.jar         ideaSDK/lib \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/annotations.jar     ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/guava-17.0.jar      ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/intellij-core.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/protobuf-2.5.0.jar ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/artifacts/core/cli-parser-1.1.jar  dependencies/cli-parser-1.1.1.jar \
+	    && cp ../build/intellij-community-138/artifacts/core/picocontainer.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/jps-model.jar      ideaSDK/jps/ \
+	    && cp ../dependencies/kotlin-*-annotations.jar                           dependencies/annotations \
+	    && cp /usr/share/java/jline2.jar dependencies/jline.jar \
+	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
+	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.8.409 \
+	    && mv dist/kotlinc ../build/kotlin-0.8.418
+
+build/kotlin-0.8.422: build/kotlin-0.8.418
+	cd kotlin \
+	    && git reset --hard \
+	    && git clean -f \
+	    && git checkout build-0.8.422 \
+	    && git apply ../patches/kotlin-0.8.422.patch \
+	    && rm -Rf ideaSDK dependencies \
+	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
+	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/javac2.jar         ideaSDK/lib \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/annotations.jar     ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/guava-17.0.jar      ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/intellij-core.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/protobuf-2.5.0.jar ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/artifacts/core/cli-parser-1.1.jar  dependencies/cli-parser-1.1.1.jar \
+	    && cp ../build/intellij-community-138/artifacts/core/picocontainer.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/jps-model.jar      ideaSDK/jps/ \
+	    && cp ../dependencies/kotlin-*-annotations.jar                           dependencies/annotations \
+	    && cp /usr/share/java/jline2.jar dependencies/jline.jar \
+	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
+	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.8.418 \
+	    && mv dist/kotlinc ../build/kotlin-0.8.422
+
+build/kotlin-0.8.1444: build/kotlin-0.8.422
+	cd kotlin \
+	    && git reset --hard \
+	    && git clean -f \
+	    && git checkout build-0.8.1444 \
+	    && git apply ../patches/kotlin-0.8.1444.patch \
+	    && rm -Rf ideaSDK dependencies \
+	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
+	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/javac2.jar         ideaSDK/lib \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/annotations.jar     ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/guava-17.0.jar      ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/intellij-core.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/protobuf-2.5.0.jar ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/artifacts/core/cli-parser-1.1.jar  dependencies/cli-parser-1.1.1.jar \
+	    && cp ../build/intellij-community-138/artifacts/core/picocontainer.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/jps-model.jar      ideaSDK/jps/ \
+	    && cp ../dependencies/kotlin-*-annotations.jar                           dependencies/annotations \
+	    && cp /usr/share/java/jline2.jar dependencies/jline.jar \
+	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
+	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.8.422 \
+	    && mv dist/kotlinc ../build/kotlin-0.8.1444
+
+build/kotlin-0.9.21: build/kotlin-0.8.1444
+	cd kotlin \
+	    && git reset --hard \
+	    && git clean -f \
+	    && git checkout build-0.9.21 \
+	    && git apply ../patches/kotlin-0.9.21.patch \
+	    && rm -Rf ideaSDK dependencies \
+	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
+	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/javac2.jar         ideaSDK/lib \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/annotations.jar     ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/guava-17.0.jar      ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/intellij-core.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/protobuf-2.5.0.jar ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/artifacts/core/cli-parser-1.1.jar  dependencies/cli-parser-1.1.1.jar \
+	    && cp ../build/intellij-community-138/artifacts/core/picocontainer.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/jps-model.jar      ideaSDK/jps/ \
+	    && cp ../dependencies/kotlin-*-annotations.jar                           dependencies/annotations \
+	    && cp /usr/share/java/jline2.jar dependencies/jline.jar \
+	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
+	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.8.1444 \
+	    && mv dist/kotlinc ../build/kotlin-0.9.21
+
+build/kotlin-0.9.738: build/kotlin-0.9.21
+	cd kotlin \
+	    && git reset --hard \
+	    && git clean -f \
+	    && git checkout build-0.9.738 \
+	    && git apply ../patches/kotlin-0.9.738.patch \
+	    && rm -Rf ideaSDK dependencies \
+	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
+	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/javac2.jar         ideaSDK/lib \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/annotations.jar     ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/guava-17.0.jar      ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/intellij-core.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/protobuf-2.5.0.jar ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/artifacts/core/cli-parser-1.1.jar  dependencies/cli-parser-1.1.1.jar \
+	    && cp ../build/intellij-community-138/artifacts/core/picocontainer.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/jps-model.jar      ideaSDK/jps/ \
+	    && cp ../dependencies/kotlin-*-annotations.jar                           dependencies/annotations \
+	    && cp /usr/share/java/jline2.jar dependencies/jline.jar \
+	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
+	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.9.21 \
+	    && mv dist/kotlinc ../build/kotlin-0.9.738
+
+build/kotlin-0.9.1204: build/kotlin-0.9.738
+	cd kotlin \
+	    && git reset --hard \
+	    && git clean -f \
+	    && git checkout build-0.9.1204 \
+	    && git apply ../patches/kotlin-0.9.1204.patch \
+	    && rm -Rf ideaSDK dependencies \
+	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
+	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/javac2.jar         ideaSDK/lib \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/annotations.jar     ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/guava-17.0.jar      ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/intellij-core.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/jdom.jar           ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/protobuf-2.5.0.jar ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/artifacts/core/cli-parser-1.1.jar  dependencies/cli-parser-1.1.1.jar \
+	    && cp ../build/intellij-community-138/artifacts/core/picocontainer.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/jps-model.jar      ideaSDK/jps/ \
+	    && cp ../dependencies/kotlin-*-annotations.jar                           dependencies/annotations \
+	    && cp /usr/share/java/jline2.jar dependencies/jline.jar \
+	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
+	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.9.738 \
+	    && mv dist/kotlinc ../build/kotlin-0.9.1204
+
+build/kotlin-0.10.300: build/kotlin-0.9.1204
+	cd kotlin \
+	    && git reset --hard \
+	    && git clean -f \
+	    && git checkout build-0.10.300 \
+	    && git apply ../patches/kotlin-0.10.300.patch \
+	    && rm -Rf ideaSDK dependencies \
+	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
+	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/javac2.jar         ideaSDK/lib \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/asm-all.jar        ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/annotations.jar     ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/guava-17.0.jar      ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/intellij-core.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/jdom.jar           ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/protobuf-2.5.0.jar ideaSDK/lib/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/artifacts/core/trove4j.jar         ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/artifacts/core/cli-parser-1.1.jar  dependencies/cli-parser-1.1.1.jar \
+	    && cp ../build/intellij-community-138/artifacts/core/picocontainer.jar   ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/core/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/log4j.jar          ideaSDK/jps/ \
+	    && cp ../build/intellij-community-138/dist.all.ce/lib/jps-model.jar      ideaSDK/jps/ \
+	    && cp ../dependencies/kotlin-*-annotations.jar                           dependencies/annotations \
+	    && cp /usr/share/java/jline2.jar dependencies/jline.jar \
+	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
+	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.9.1204 \
+	    && mv dist/kotlinc ../build/kotlin-0.10.300
+
