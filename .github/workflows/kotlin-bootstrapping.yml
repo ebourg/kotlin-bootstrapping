@@ -1,0 +1,29 @@
+name: Kotlin Bootstrapping
+
+on: workflow_dispatch
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Set up environment
+      run: sudo apt install openjdk-8-jdk ant ant-contrib libjline2-java
+
+    - name: Configure Java
+      run: |
+        sudo update-java-alternatives --set java-1.8.0-openjdk-amd64
+        java -version
+
+    - name: Fetch sources
+      run: |
+        git clone https://github.com/ebourg/kotlin-bootstrapping .
+        make intellij-community
+        make kotlin
+
+    - name: Build
+      run: |
+        unset JAVA_HOME
+        make
+
+    - name: Report
+      run: tree -s -h --du build/kotlin*
