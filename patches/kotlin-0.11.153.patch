@@ -1,0 +1,39 @@
+diff --git a/build.xml b/build.xml
+index 9f02b21df15..f7acff69c94 100644
+--- a/build.xml
++++ b/build.xml
+@@ -911,7 +911,7 @@
+             depends="builtins,stdlib,core,reflection,pack-runtime,pack-runtime-sources"/>
+ 
+     <target name="dist"
+-            depends="clean,init,prepare-dist,preloader,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,kotlin-js-stdlib,android-compiler-plugin"
++            depends="clean,init,prepare-dist,preloader,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,android-compiler-plugin"
+             description="Builds redistributables from sources"/>
+ 
+     <target name="dist-quick"
+diff --git a/libraries/stdlib/src/kotlin/io/ReadWrite.kt b/libraries/stdlib/src/kotlin/io/ReadWrite.kt
+index d441139b617..6cb7d9cc002 100644
+--- a/libraries/stdlib/src/kotlin/io/ReadWrite.kt
++++ b/libraries/stdlib/src/kotlin/io/ReadWrite.kt
+@@ -159,7 +159,7 @@ public fun Reader.forEachLine(block: (String) -> Unit): Unit = useLines { lines
+  * @return the value returned by [block].
+  */
+ public inline fun <T> Reader.useLines(block: (Sequence<String>) -> T): T =
+-        this.buffered().use { block(it.lines()) }
++        this.buffered().use { block(it.lineSequence()) }
+ 
+ /**
+  * Returns an iterator over each line.
+@@ -169,10 +169,10 @@ public inline fun <T> Reader.useLines(block: (Sequence<String>) -> T): T =
+  *
+  * We suggest you try the method [useLines] instead which closes the stream when the processing is complete.
+  */
+-public fun BufferedReader.lines(): Sequence<String> = LinesStream(this)
++public fun BufferedReader.lineSequence(): Sequence<String> = LinesStream(this)
+ 
+ deprecated("Use lines() function which returns Stream<String>")
+-public fun BufferedReader.lineIterator(): Iterator<String> = lines().iterator()
++public fun BufferedReader.lineIterator(): Iterator<String> = lineSequence().iterator()
+ 
+ private class LinesStream(private val reader: BufferedReader) : Sequence<String> {
+     override fun iterator(): Iterator<String> {
