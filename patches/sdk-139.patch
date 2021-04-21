@@ -1,0 +1,13 @@
+diff --git a/build.xml b/build.xml
+index 8e6bdbcfa226..3e99367cf8ac 100644
+--- a/build.xml
++++ b/build.xml
+@@ -16,7 +16,7 @@
+     <attribute name="script" />
+     <sequential>
+       <java failonerror="true" jar="${project.home}/lib/ant/lib/ant-launcher.jar" fork="true">
+-        <jvmarg line="-Xmx612m -XX:MaxPermSize=152m"/>
++        <jvmarg line="-Xmx4096m"/>
+         <sysproperty key="java.awt.headless" value="true"/>
+         <arg line="&quot;-Dgant.script=@{script}&quot;"/>
+         <arg line="&quot;-Dteamcity.build.tempDir=${tmp.dir}&quot;"/>
