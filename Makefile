@@ -19,7 +19,7 @@ intellij-community:
 build/intellij-community-133: | intellij-community
 	cd intellij-community \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout 133 \
 	    && git apply ../patches/sdk-133.patch \
 	    && rm -Rf plugins/gradle \
@@ -34,7 +34,7 @@ kotlin:
 build/kotlin-0.6.786: build/intellij-community-133 | kotlin
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.6.786 \
 	    && git apply ../patches/kotlin-0.6.786.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -60,7 +60,7 @@ build/kotlin-0.6.786: build/intellij-community-133 | kotlin
 build/kotlin-0.6.1364: build/kotlin-0.6.786
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.6.1364 \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
@@ -87,7 +87,7 @@ build/kotlin-0.6.1364: build/kotlin-0.6.786
 build/kotlin-0.6.1932: build/kotlin-0.6.1364
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.6.1932 \
 	    && git apply ../patches/kotlin-0.6.1932.patch \
 	    && cp -r runtime/src/org/jetbrains/annotations core/util.runtime/src/org/jetbrains/ \
@@ -118,7 +118,7 @@ build/kotlin-0.6.1932: build/kotlin-0.6.1364
 build/kotlin-0.6.2107: build/kotlin-0.6.1932
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.6.2107 \
 	    && git apply ../patches/kotlin-0.6.2107.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -147,7 +147,7 @@ build/kotlin-0.6.2107: build/kotlin-0.6.1932
 build/kotlin-0.6.2338: build/kotlin-0.6.2107
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.6.2338 \
 	    && git apply ../patches/kotlin-0.6.2338.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -177,7 +177,7 @@ build/kotlin-0.6.2338: build/kotlin-0.6.2107
 build/intellij-community-134: | intellij-community
 	cd intellij-community \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout 1168c7b8cb4dc8318b8d24037b372141730a0d1f \
 	    && git apply ../patches/sdk-134.patch \
 	    && ant \
@@ -193,7 +193,7 @@ dependencies/kotlin-android-sdk-annotations.jar:
 build/kotlin-0.6.2451: build/kotlin-0.6.2338 build/intellij-community-134 dependencies/kotlin-jdk-annotations.jar dependencies/kotlin-android-sdk-annotations.jar
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.6.2451 \
 	    && git apply ../patches/kotlin-0.6.2451.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -223,7 +223,7 @@ build/kotlin-0.6.2451: build/kotlin-0.6.2338 build/intellij-community-134 depend
 build/kotlin-0.6.2516: build/kotlin-0.6.2451
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.6.2516 \
 	    && git apply ../patches/kotlin-0.6.2516.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -253,7 +253,7 @@ build/kotlin-0.6.2516: build/kotlin-0.6.2451
 build/kotlin-0.7.333: build/kotlin-0.6.2516
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.7.333 \
 	    && git apply ../patches/kotlin-0.7.333.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -284,7 +284,7 @@ build/kotlin-0.7.333: build/kotlin-0.6.2516
 build/intellij-community-135: | intellij-community
 	cd intellij-community \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout 135 \
 	    && git apply ../patches/sdk-135.patch \
 	    && ant \
@@ -294,7 +294,7 @@ build/intellij-community-135: | intellij-community
 build/kotlin-0.7.638: build/kotlin-0.7.333 build/intellij-community-135
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.7.638 \
 	    && git apply ../patches/kotlin-0.7.638.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -325,7 +325,7 @@ build/kotlin-0.7.638: build/kotlin-0.7.333 build/intellij-community-135
 build/kotlin-0.7.1189: build/kotlin-0.7.638
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.7.1189 \
 	    && git apply ../patches/kotlin-0.7.1189.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -357,7 +357,7 @@ build/kotlin-0.7.1189: build/kotlin-0.7.638
 build/intellij-community-138: | intellij-community
 	cd intellij-community \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout 070c64f86da3bfd3c86f151c75aefeb4f67870c8 \
 	    && git apply ../patches/sdk-138.patch \
 	    && ant \
@@ -367,7 +367,7 @@ build/intellij-community-138: | intellij-community
 build/kotlin-0.8.84: build/kotlin-0.7.1189 build/intellij-community-138
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.8.84 \
 	    && git apply ../patches/kotlin-0.8.84.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -396,7 +396,7 @@ build/kotlin-0.8.84: build/kotlin-0.7.1189 build/intellij-community-138
 build/kotlin-0.8.409: build/kotlin-0.8.84
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.8.409 \
 	    && git apply ../patches/kotlin-0.8.409.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -425,7 +425,7 @@ build/kotlin-0.8.409: build/kotlin-0.8.84
 build/kotlin-0.8.418: build/kotlin-0.8.409
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.8.418 \
 	    && git apply ../patches/kotlin-0.8.418.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -454,7 +454,7 @@ build/kotlin-0.8.418: build/kotlin-0.8.409
 build/kotlin-0.8.422: build/kotlin-0.8.418
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.8.422 \
 	    && git apply ../patches/kotlin-0.8.422.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -483,7 +483,7 @@ build/kotlin-0.8.422: build/kotlin-0.8.418
 build/kotlin-0.8.1444: build/kotlin-0.8.422
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.8.1444 \
 	    && git apply ../patches/kotlin-0.8.1444.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -512,7 +512,7 @@ build/kotlin-0.8.1444: build/kotlin-0.8.422
 build/kotlin-0.9.21: build/kotlin-0.8.1444
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.9.21 \
 	    && git apply ../patches/kotlin-0.9.21.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -541,7 +541,7 @@ build/kotlin-0.9.21: build/kotlin-0.8.1444
 build/kotlin-0.9.738: build/kotlin-0.9.21
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.9.738 \
 	    && git apply ../patches/kotlin-0.9.738.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -570,7 +570,7 @@ build/kotlin-0.9.738: build/kotlin-0.9.21
 build/kotlin-0.9.1204: build/kotlin-0.9.738
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.9.1204 \
 	    && git apply ../patches/kotlin-0.9.1204.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -600,7 +600,7 @@ build/kotlin-0.9.1204: build/kotlin-0.9.738
 build/kotlin-0.10.300: build/kotlin-0.9.1204
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.10.300 \
 	    && git apply ../patches/kotlin-0.10.300.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -631,7 +631,7 @@ build/kotlin-0.10.300: build/kotlin-0.9.1204
 build/intellij-community-139: | intellij-community
 	cd intellij-community \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout 26e72feacf91bfb222bec00b3139ed05aa3084b5 \
 	    && git apply ../patches/sdk-139.patch \
 	    && ant \
@@ -641,7 +641,7 @@ build/intellij-community-139: | intellij-community
 build/kotlin-0.10.823: build/kotlin-0.10.300 build/intellij-community-139
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.10.823 \
 	    && git apply ../patches/kotlin-0.10.823.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -672,7 +672,7 @@ build/kotlin-0.10.823: build/kotlin-0.10.300 build/intellij-community-139
 build/intellij-community-141: | intellij-community
 	cd intellij-community \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout 141 \
 	    && git apply ../patches/sdk-141.patch \
 	    && ant \
@@ -682,7 +682,7 @@ build/intellij-community-141: | intellij-community
 build/kotlin-0.10.1023: build/kotlin-0.10.823 build/intellij-community-141
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.10.1023 \
 	    && git apply ../patches/kotlin-0.10.1023.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -712,7 +712,7 @@ build/kotlin-0.10.1023: build/kotlin-0.10.823 build/intellij-community-141
 build/kotlin-0.10.1336: build/kotlin-0.10.1023
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.10.1336 \
 	    && git apply ../patches/kotlin-0.10.1336.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -742,7 +742,7 @@ build/kotlin-0.10.1336: build/kotlin-0.10.1023
 build/kotlin-0.10.1426: build/kotlin-0.10.1336
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.10.1426 \
 	    && git apply ../patches/kotlin-0.10.1426.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -775,7 +775,7 @@ build/kotlin-0.10.1426: build/kotlin-0.10.1336
 build/kotlin-0.11.153: build/kotlin-0.10.1426
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.11.153 \
 	    && git apply ../patches/kotlin-0.11.153.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -809,7 +809,7 @@ build/kotlin-0.11.153: build/kotlin-0.10.1426
 build/kotlin-0.11.873: build/kotlin-0.11.153
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.11.873 \
 	    && git apply ../patches/kotlin-0.11.873.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -843,7 +843,7 @@ build/kotlin-0.11.873: build/kotlin-0.11.153
 build/kotlin-0.11.992: build/kotlin-0.11.873
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.11.992 \
 	    && git apply ../patches/kotlin-0.11.992.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -877,7 +877,7 @@ build/kotlin-0.11.992: build/kotlin-0.11.873
 build/kotlin-0.11.1014: build/kotlin-0.11.992
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.11.1014 \
 	    && git apply ../patches/kotlin-0.11.1014.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -911,7 +911,7 @@ build/kotlin-0.11.1014: build/kotlin-0.11.992
 build/kotlin-0.11.1201: build/kotlin-0.11.1014
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.11.1201 \
 	    && git apply ../patches/kotlin-0.11.1201.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -945,7 +945,7 @@ build/kotlin-0.11.1201: build/kotlin-0.11.1014
 build/kotlin-0.11.1393: build/kotlin-0.11.1201
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.11.1393 \
 	    && git apply ../patches/kotlin-0.11.1393.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -979,7 +979,7 @@ build/kotlin-0.11.1393: build/kotlin-0.11.1201
 build/kotlin-0.12.108: build/kotlin-0.11.1393
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.12.108 \
 	    && git apply ../patches/kotlin-0.12.108.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -1014,7 +1014,7 @@ build/kotlin-0.12.108: build/kotlin-0.11.1393
 build/kotlin-0.12.115: build/kotlin-0.12.108
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.12.115 \
 	    && git apply ../patches/kotlin-0.12.115.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -1049,7 +1049,7 @@ build/kotlin-0.12.115: build/kotlin-0.12.108
 build/kotlin-0.12.176: build/kotlin-0.12.115
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.12.176 \
 	    && git apply ../patches/kotlin-0.12.176.patch \
 	    && rm -Rf ideaSDK dependencies \
@@ -1084,7 +1084,7 @@ build/kotlin-0.12.176: build/kotlin-0.12.115
 build/kotlin-0.12.470: build/kotlin-0.12.176
 	cd kotlin \
 	    && git reset --hard \
-	    && git clean -f \
+	    && git clean -fdx \
 	    && git checkout build-0.12.470 \
 	    && git apply ../patches/kotlin-0.12.470.patch \
 	    && rm -Rf ideaSDK dependencies \
