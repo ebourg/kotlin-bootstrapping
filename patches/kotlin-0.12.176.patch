@@ -1,0 +1,39 @@
+diff --git a/build.xml b/build.xml
+index 96fa1343110..686cd9d09d5 100644
+--- a/build.xml
++++ b/build.xml
+@@ -829,7 +829,7 @@
+             depends="builtins,functions-migration,stdlib,core,reflection,pack-runtime,pack-runtime-sources"/>
+ 
+     <target name="dist"
+-            depends="clean,init,prepare-dist,preloader,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,kotlin-js-stdlib,android-compiler-plugin"
++            depends="clean,init,prepare-dist,preloader,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,android-compiler-plugin"
+             description="Builds redistributables from sources"/>
+ 
+     <target name="dist-quick"
+diff --git a/libraries/stdlib/src/kotlin/io/ReadWrite.kt b/libraries/stdlib/src/kotlin/io/ReadWrite.kt
+index b2ea6d2c9bb..345b4cfaf77 100644
+--- a/libraries/stdlib/src/kotlin/io/ReadWrite.kt
++++ b/libraries/stdlib/src/kotlin/io/ReadWrite.kt
+@@ -235,7 +235,7 @@ public fun Reader.forEachLine(block: (String) -> Unit): Unit = useLines { it.for
+  * @return the value returned by [block].
+  */
+ public inline fun <T> Reader.useLines(block: (Sequence<String>) -> T): T =
+-        buffered().use { block(it.lines()) }
++        buffered().use { block(it.lineSequence()) }
+ 
+ /**
+  * Returns a sequence of corresponding file lines.
+@@ -248,10 +248,10 @@ public inline fun <T> Reader.useLines(block: (Sequence<String>) -> T): T =
+  *
+  * @return a sequence of corresponding file lines. The sequence returned can be iterated only once.
+  */
+-public fun BufferedReader.lines(): Sequence<String> = LinesSequence(this).constrainOnce()
++public fun BufferedReader.lineSequence(): Sequence<String> = LinesSequence(this).constrainOnce()
+ 
+ deprecated("Use lines() function which returns Sequence<String>")
+-public fun BufferedReader.lineIterator(): Iterator<String> = lines().iterator()
++public fun BufferedReader.lineIterator(): Iterator<String> = lineSequence().iterator()
+ 
+ private class LinesSequence(private val reader: BufferedReader) : Sequence<String> {
+     override public fun iterator(): Iterator<String> {
