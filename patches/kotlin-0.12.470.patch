@@ -1,0 +1,27 @@
+diff --git a/build.xml b/build.xml
+index 7350855833a..6cf5502a98b 100644
+--- a/build.xml
++++ b/build.xml
+@@ -841,7 +841,7 @@
+             depends="builtins,functions-migration,stdlib,core,reflection,pack-runtime,pack-runtime-sources"/>
+ 
+     <target name="dist"
+-            depends="clean,init,prepare-dist,preloader,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,kotlin-js-stdlib,android-compiler-plugin"
++            depends="clean,init,prepare-dist,preloader,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,android-compiler-plugin"
+             description="Builds redistributables from sources"/>
+ 
+     <target name="dist-quick"
+diff --git a/libraries/stdlib/src/kotlin/io/ReadWrite.kt b/libraries/stdlib/src/kotlin/io/ReadWrite.kt
+index 08b779f559f..29014c58492 100644
+--- a/libraries/stdlib/src/kotlin/io/ReadWrite.kt
++++ b/libraries/stdlib/src/kotlin/io/ReadWrite.kt
+@@ -250,9 +250,6 @@ public inline fun <T> Reader.useLines(block: (Sequence<String>) -> T): T =
+  */
+ public fun BufferedReader.lineSequence(): Sequence<String> = LinesSequence(this).constrainOnce()
+ 
+-deprecated("Use lineSequence() instead to avoid conflict with JDK8 lines() method.", ReplaceWith("lineSequence()"))
+-public fun BufferedReader.lines(): Sequence<String> = lineSequence()
+-
+ deprecated("Use lineSequence() function which returns Sequence<String>")
+ public fun BufferedReader.lineIterator(): Iterator<String> = lineSequence().iterator()
+ 
