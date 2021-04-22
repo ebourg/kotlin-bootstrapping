@@ -43,4 +43,4 @@ Build the image:
 
 And start the build with:
 
-    docker run --network none --rm --volume $(pwd):/kotlin --user $(id -u):$(id -g) kotlin-bootstrapping
+    docker run --rm --volume $(pwd):/kotlin --user $(id -u):$(id -g) kotlin-bootstrapping
