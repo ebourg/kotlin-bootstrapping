@@ -19,7 +19,7 @@ reader.
 
 ## Status
 
-The build works up to Kotlin 0.11.1393 (2015-05-18).
+The build works up to Kotlin 0.12.108 (2015-05-26).
 
 
 ## How to build
@@ -28,7 +28,7 @@ The build works up to Kotlin 0.11.1393 (2015-05-18).
 
 Prepare the environment with:
 
-    apt install make git openjdk-8-jdk ant ant-contrib libjline2-java
+    apt install make git openjdk-8-jdk ant ant-contrib libjline2-java libjarjar-java
     update-java-alternatives --set java-1.8.0-openjdk-amd64
 
 And then run:

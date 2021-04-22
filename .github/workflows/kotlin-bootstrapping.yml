@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Set up environment
-      run: sudo apt install openjdk-8-jdk ant ant-contrib libjline2-java
+      run: sudo apt install openjdk-8-jdk ant ant-contrib libjline2-java libjarjar-java
 
     - name: Configure Java
       run: |
