@@ -37,10 +37,10 @@ And then run:
 
 ### Docker
 
-Build the container:
+Build the image:
 
     docker build . --tag kotlin-bootstrapping
 
 And start the build with:
 
-    docker run --rm --volume $(pwd):/kotlin --user $(id -u):$(id -g) kotlin-bootstrapping
+    docker run --network none --rm --volume $(pwd):/kotlin --user $(id -u):$(id -g) kotlin-bootstrapping
