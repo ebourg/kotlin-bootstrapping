@@ -1,0 +1,13 @@
+diff --git a/build.xml b/build.xml
+index ea22fc42ca03..b5623fddd186 100644
+--- a/build.xml
++++ b/build.xml
+@@ -50,7 +50,7 @@
+     <attribute name="script" />
+     <sequential>
+       <java failonerror="true" jar="${project.home}/lib/ant/lib/ant-launcher.jar" fork="true">
+-        <jvmarg line="-Xmx612m -XX:MaxPermSize=152m"/>
++        <jvmarg line="-Xmx4096m"/>
+         <jvmarg value="-Djna.nosys=true" />
+         <jvmarg value="-Dout=${out.dir}" />
+         <jvmarg value="-DbuildNumber=${build.number}" />

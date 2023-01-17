@@ -4,7 +4,7 @@
 
 .PHONY: bootstrap init clean
 
-bootstrap: init build/kotlin-0.12.470
+bootstrap: init build/kotlin-0.12.1077
 
 init:
 	mkdir -p build dependencies
@@ -1115,3 +1115,52 @@ build/kotlin-0.12.470: build/kotlin-0.12.176
 	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.8/lib/ \
 	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.12.176 \
 	    && mv dist/kotlinc ../build/kotlin-0.12.470
+
+# Build the IntelliJ SDK 143
+build/intellij-community-143: | intellij-community
+	cd intellij-community \
+	    && git reset --hard \
+	    && git clean -fdx \
+	    && git checkout 143 \
+	    && git apply ../patches/sdk-143.patch \
+	    && ant \
+	    && rm -Rf out/classes out/artifacts/*.zip out/artifacts/*.tar.gz out/dist.win.ce out/dist.mac.ce out/dist.all.ce/plugins \
+	    && mv out ../build/intellij-community-143
+
+build/kotlin-0.12.1077: build/kotlin-0.12.470 build/intellij-community-143
+	cd kotlin \
+	    && git reset --hard \
+	    && git clean -fdx \
+	    && git checkout build-0.12.1077 \
+	    && git apply ../patches/kotlin-0.12.1077.patch \
+	    && rm -Rf ideaSDK dependencies \
+	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
+	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/javac2.jar                ideaSDK/lib \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/asm-all.jar               ideaSDK/lib/ \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/asm-all.jar               ideaSDK/core/ \
+	    && cp ../build/intellij-community-143/artifacts/core/annotations.jar            ideaSDK/core/ \
+	    && cp ../build/intellij-community-143/artifacts/core/guava-17.0.jar             ideaSDK/core/ \
+	    && cp ../build/intellij-community-143/artifacts/core/intellij-core.jar          ideaSDK/core/ \
+	    && cp ../build/intellij-community-143/artifacts/core/intellij-core-analysis.jar ideaSDK/core-analysis/ \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/jdom.jar                  ideaSDK/core/ \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/protobuf-2.5.0.jar        ideaSDK/lib/ \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/protobuf-2.5.0.jar        dependencies/protobuf-2.5.0-lite.jar \
+	    && cp ../build/intellij-community-143/artifacts/core/trove4j.jar                ideaSDK/core/ \
+	    && cp ../build/intellij-community-143/artifacts/core/trove4j.jar                ideaSDK/jps/ \
+	    && cp ../build/intellij-community-143/artifacts/core/cli-parser-1.1.jar         dependencies/cli-parser-1.1.1.jar \
+	    && cp ../build/intellij-community-143/artifacts/core/picocontainer.jar          ideaSDK/core/ \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/log4j.jar                 ideaSDK/core/ \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/log4j.jar                 ideaSDK/jps/ \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/jps-model.jar             ideaSDK/jps/ \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/jna-platform.jar          ideaSDK/lib/ \
+	    && cp ../build/intellij-community-143/dist.all.ce/lib/oromatcher.jar            ideaSDK/lib/ \
+	    && cp ../dependencies/kotlin-*-annotations.jar                                  dependencies/annotations \
+	    && cp /usr/share/java/jarjar.jar          dependencies/jarjar.jar \
+	    && cp /usr/share/java/hawtjni-runtime.jar dependencies/hawtjni-runtime.jar \
+	    && cp /usr/share/java/jansi.jar           dependencies/jansi.jar \
+	    && cp /usr/share/java/jansi-native.jar    dependencies/jansi-native.jar \
+	    && cp /usr/share/java/jline2.jar          dependencies/jline.jar \
+	    && cp /usr/share/ant/lib/ant.jar          dependencies/ant-1.8/lib/ \
+	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.12.470 \
+	    && mv dist/kotlinc ../build/kotlin-0.12.1077
