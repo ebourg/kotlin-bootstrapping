@@ -322,12 +322,12 @@ build/kotlin-0.7.638: build/kotlin-0.7.333 build/intellij-community-135
 	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.7.333 \
 	    && mv dist/kotlinc ../build/kotlin-0.7.638
 
-build/kotlin-0.7.1189: build/kotlin-0.7.638
+build/kotlin-0.7.1214: build/kotlin-0.7.638
 	cd kotlin \
 	    && git reset --hard \
 	    && git clean -fdx \
-	    && git checkout build-0.7.1189 \
-	    && git apply ../patches/kotlin-0.7.1189.patch \
+	    && git checkout build-0.7.1214 \
+	    && git apply ../patches/kotlin-0.7.1214.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -351,7 +351,7 @@ build/kotlin-0.7.1189: build/kotlin-0.7.638
 	    && cp /usr/share/java/jline2.jar dependencies/jline.jar \
 	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
 	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.7.638 \
-	    && mv dist/kotlinc ../build/kotlin-0.7.1189
+	    && mv dist/kotlinc ../build/kotlin-0.7.1214
 
 # Build the IntelliJ SDK 138
 build/intellij-community-138: | intellij-community
@@ -364,7 +364,7 @@ build/intellij-community-138: | intellij-community
 	    && rm -Rf out/classes out/artifacts/*.zip out/artifacts/*.tar.gz out/dist.win.ce out/dist.mac.ce out/dist.all.ce/plugins \
 	    && mv out ../build/intellij-community-138
 
-build/kotlin-0.8.84: build/kotlin-0.7.1189 build/intellij-community-138
+build/kotlin-0.8.84: build/kotlin-0.7.1214 build/intellij-community-138
 	cd kotlin \
 	    && git reset --hard \
 	    && git clean -fdx \
@@ -390,7 +390,7 @@ build/kotlin-0.8.84: build/kotlin-0.7.1189 build/intellij-community-138
 	    && cp ../dependencies/kotlin-*-annotations.jar                           dependencies/annotations \
 	    && cp /usr/share/java/jline2.jar dependencies/jline.jar \
 	    && cp /usr/share/ant/lib/ant.jar dependencies/ant-1.7/lib/ \
-	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.7.1189 \
+	    && ANT_OPTS=-noverify ant -Dshrink=false -Dgenerate.javadoc=false -Dbootstrap.build.no.tests=true -Dbootstrap.compiler.home=../build/kotlin-0.7.1214 \
 	    && mv dist/kotlinc ../build/kotlin-0.8.84
 
 build/kotlin-0.8.409: build/kotlin-0.8.84
