@@ -12,6 +12,11 @@ init:
 clean:
 	rm -Rf build
 
+# Cleans up the Kotlin source directory, checkouts the specified tag and applies the patch
+define kcheckout
+	cd kotlin && git reset --hard && git clean -fdx && git checkout build-$(1) && git apply ../patches/kotlin-$(1).patch
+endef
+
 intellij-community:
 	git clone https://github.com/JetBrains/intellij-community
 
@@ -32,11 +37,8 @@ kotlin:
 
 # Build Kotlin 0.6.786 (last version of the compiler buildable without Kotlin)
 build/kotlin-0.6.786: build/intellij-community-133 | kotlin
+	$(call kcheckout,0.6.786)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.6.786 \
-	    && git apply ../patches/kotlin-0.6.786.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant \
@@ -58,11 +60,8 @@ build/kotlin-0.6.786: build/intellij-community-133 | kotlin
 	    && mv dist/kotlinc ../build/kotlin-0.6.786
 
 build/kotlin-0.6.1364: build/kotlin-0.6.786
+	$(call kcheckout,0.6.1364)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.6.1364 \
-	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib \
 	    && cp ../build/intellij-community-133/dist.all.ce/lib/javac2.jar         ideaSDK/lib \
@@ -85,11 +84,8 @@ build/kotlin-0.6.1364: build/kotlin-0.6.786
 	    && mv dist/kotlinc ../build/kotlin-0.6.1364
 
 build/kotlin-0.6.1932: build/kotlin-0.6.1364
+	$(call kcheckout,0.6.1932)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.6.1932 \
-	    && git apply ../patches/kotlin-0.6.1932.patch \
 	    && cp -r runtime/src/org/jetbrains/annotations core/util.runtime/src/org/jetbrains/ \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
@@ -116,11 +112,8 @@ build/kotlin-0.6.1932: build/kotlin-0.6.1364
 	    && mv dist/kotlinc ../build/kotlin-0.6.1932
 
 build/kotlin-0.6.2107: build/kotlin-0.6.1932
+	$(call kcheckout,0.6.2107)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.6.2107 \
-	    && git apply ../patches/kotlin-0.6.2107.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib \
@@ -145,11 +138,8 @@ build/kotlin-0.6.2107: build/kotlin-0.6.1932
 	    && mv dist/kotlinc ../build/kotlin-0.6.2107
 
 build/kotlin-0.6.2338: build/kotlin-0.6.2107
+	$(call kcheckout,0.6.2338)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.6.2338 \
-	    && git apply ../patches/kotlin-0.6.2338.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib \
@@ -191,11 +181,8 @@ dependencies/kotlin-android-sdk-annotations.jar:
 	wget https://teamcity.jetbrains.com/guestAuth/repository/download/Kotlin_KAnnotator_InferJdkAnnotations/shipWithKotlin.tcbuildtag/kotlin-android-sdk-annotations.jar -P dependencies
 
 build/kotlin-0.6.2451: build/kotlin-0.6.2338 build/intellij-community-134 dependencies/kotlin-jdk-annotations.jar dependencies/kotlin-android-sdk-annotations.jar
+	$(call kcheckout,0.6.2451)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.6.2451 \
-	    && git apply ../patches/kotlin-0.6.2451.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -221,11 +208,8 @@ build/kotlin-0.6.2451: build/kotlin-0.6.2338 build/intellij-community-134 depend
 	    && mv dist/kotlinc ../build/kotlin-0.6.2451
 
 build/kotlin-0.6.2516: build/kotlin-0.6.2451
+	$(call kcheckout,0.6.2516)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.6.2516 \
-	    && git apply ../patches/kotlin-0.6.2516.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -251,11 +235,8 @@ build/kotlin-0.6.2516: build/kotlin-0.6.2451
 	    && mv dist/kotlinc ../build/kotlin-0.6.2516
 
 build/kotlin-0.7.333: build/kotlin-0.6.2516
+	$(call kcheckout,0.7.333)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.7.333 \
-	    && git apply ../patches/kotlin-0.7.333.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -292,11 +273,8 @@ build/intellij-community-135: | intellij-community
 	    && mv out ../build/intellij-community-135
 
 build/kotlin-0.7.638: build/kotlin-0.7.333 build/intellij-community-135
+	$(call kcheckout,0.7.638)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.7.638 \
-	    && git apply ../patches/kotlin-0.7.638.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -323,11 +301,8 @@ build/kotlin-0.7.638: build/kotlin-0.7.333 build/intellij-community-135
 	    && mv dist/kotlinc ../build/kotlin-0.7.638
 
 build/kotlin-0.7.1214: build/kotlin-0.7.638
+	$(call kcheckout,0.7.1214)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.7.1214 \
-	    && git apply ../patches/kotlin-0.7.1214.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -365,11 +340,8 @@ build/intellij-community-138: | intellij-community
 	    && mv out ../build/intellij-community-138
 
 build/kotlin-0.8.84: build/kotlin-0.7.1214 build/intellij-community-138
+	$(call kcheckout,0.8.84)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.8.84 \
-	    && git apply ../patches/kotlin-0.8.84.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -394,11 +366,8 @@ build/kotlin-0.8.84: build/kotlin-0.7.1214 build/intellij-community-138
 	    && mv dist/kotlinc ../build/kotlin-0.8.84
 
 build/kotlin-0.8.409: build/kotlin-0.8.84
+	$(call kcheckout,0.8.409)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.8.409 \
-	    && git apply ../patches/kotlin-0.8.409.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -423,11 +392,8 @@ build/kotlin-0.8.409: build/kotlin-0.8.84
 	    && mv dist/kotlinc ../build/kotlin-0.8.409
 
 build/kotlin-0.8.418: build/kotlin-0.8.409
+	$(call kcheckout,0.8.418)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.8.418 \
-	    && git apply ../patches/kotlin-0.8.418.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -452,11 +418,8 @@ build/kotlin-0.8.418: build/kotlin-0.8.409
 	    && mv dist/kotlinc ../build/kotlin-0.8.418
 
 build/kotlin-0.8.422: build/kotlin-0.8.418
+	$(call kcheckout,0.8.422)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.8.422 \
-	    && git apply ../patches/kotlin-0.8.422.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -481,11 +444,8 @@ build/kotlin-0.8.422: build/kotlin-0.8.418
 	    && mv dist/kotlinc ../build/kotlin-0.8.422
 
 build/kotlin-0.8.1444: build/kotlin-0.8.422
+	$(call kcheckout,0.8.1444)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.8.1444 \
-	    && git apply ../patches/kotlin-0.8.1444.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -510,11 +470,8 @@ build/kotlin-0.8.1444: build/kotlin-0.8.422
 	    && mv dist/kotlinc ../build/kotlin-0.8.1444
 
 build/kotlin-0.9.21: build/kotlin-0.8.1444
+	$(call kcheckout,0.9.21)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.9.21 \
-	    && git apply ../patches/kotlin-0.9.21.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -539,11 +496,8 @@ build/kotlin-0.9.21: build/kotlin-0.8.1444
 	    && mv dist/kotlinc ../build/kotlin-0.9.21
 
 build/kotlin-0.9.738: build/kotlin-0.9.21
+	$(call kcheckout,0.9.738)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.9.738 \
-	    && git apply ../patches/kotlin-0.9.738.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -568,11 +522,8 @@ build/kotlin-0.9.738: build/kotlin-0.9.21
 	    && mv dist/kotlinc ../build/kotlin-0.9.738
 
 build/kotlin-0.9.1204: build/kotlin-0.9.738
+	$(call kcheckout,0.9.1204)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.9.1204 \
-	    && git apply ../patches/kotlin-0.9.1204.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -598,11 +549,8 @@ build/kotlin-0.9.1204: build/kotlin-0.9.738
 	    && mv dist/kotlinc ../build/kotlin-0.9.1204
 
 build/kotlin-0.10.300: build/kotlin-0.9.1204
+	$(call kcheckout,0.10.300)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.10.300 \
-	    && git apply ../patches/kotlin-0.10.300.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -639,11 +587,8 @@ build/intellij-community-139: | intellij-community
 	    && mv out ../build/intellij-community-139
 
 build/kotlin-0.10.823: build/kotlin-0.10.300 build/intellij-community-139
+	$(call kcheckout,0.10.823)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.10.823 \
-	    && git apply ../patches/kotlin-0.10.823.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -680,11 +625,8 @@ build/intellij-community-141: | intellij-community
 	    && mv out ../build/intellij-community-141
 
 build/kotlin-0.10.1023: build/kotlin-0.10.823 build/intellij-community-141
+	$(call kcheckout,0.10.1023)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.10.1023 \
-	    && git apply ../patches/kotlin-0.10.1023.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -710,11 +652,8 @@ build/kotlin-0.10.1023: build/kotlin-0.10.823 build/intellij-community-141
 	    && mv dist/kotlinc ../build/kotlin-0.10.1023
 
 build/kotlin-0.10.1336: build/kotlin-0.10.1023
+	$(call kcheckout,0.10.1336)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.10.1336 \
-	    && git apply ../patches/kotlin-0.10.1336.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -740,11 +679,8 @@ build/kotlin-0.10.1336: build/kotlin-0.10.1023
 	    && mv dist/kotlinc ../build/kotlin-0.10.1336
 
 build/kotlin-0.10.1426: build/kotlin-0.10.1336
+	$(call kcheckout,0.10.1426)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.10.1426 \
-	    && git apply ../patches/kotlin-0.10.1426.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -773,11 +709,8 @@ build/kotlin-0.10.1426: build/kotlin-0.10.1336
 	    && mv dist/kotlinc ../build/kotlin-0.10.1426
 
 build/kotlin-0.11.153: build/kotlin-0.10.1426
+	$(call kcheckout,0.11.153)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.11.153 \
-	    && git apply ../patches/kotlin-0.11.153.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -807,11 +740,8 @@ build/kotlin-0.11.153: build/kotlin-0.10.1426
 	    && mv dist/kotlinc ../build/kotlin-0.11.153
 
 build/kotlin-0.11.873: build/kotlin-0.11.153
+	$(call kcheckout,0.11.873)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.11.873 \
-	    && git apply ../patches/kotlin-0.11.873.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -841,11 +771,8 @@ build/kotlin-0.11.873: build/kotlin-0.11.153
 	    && mv dist/kotlinc ../build/kotlin-0.11.873
 
 build/kotlin-0.11.992: build/kotlin-0.11.873
+	$(call kcheckout,0.11.992)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.11.992 \
-	    && git apply ../patches/kotlin-0.11.992.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -875,11 +802,8 @@ build/kotlin-0.11.992: build/kotlin-0.11.873
 	    && mv dist/kotlinc ../build/kotlin-0.11.992
 
 build/kotlin-0.11.1014: build/kotlin-0.11.992
+	$(call kcheckout,0.11.1014)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.11.1014 \
-	    && git apply ../patches/kotlin-0.11.1014.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -909,11 +833,8 @@ build/kotlin-0.11.1014: build/kotlin-0.11.992
 	    && mv dist/kotlinc ../build/kotlin-0.11.1014
 
 build/kotlin-0.11.1201: build/kotlin-0.11.1014
+	$(call kcheckout,0.11.1201)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.11.1201 \
-	    && git apply ../patches/kotlin-0.11.1201.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -943,11 +864,8 @@ build/kotlin-0.11.1201: build/kotlin-0.11.1014
 	    && mv dist/kotlinc ../build/kotlin-0.11.1201
 
 build/kotlin-0.11.1393: build/kotlin-0.11.1201
+	$(call kcheckout,0.11.1393)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.11.1393 \
-	    && git apply ../patches/kotlin-0.11.1393.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -977,11 +895,8 @@ build/kotlin-0.11.1393: build/kotlin-0.11.1201
 	    && mv dist/kotlinc ../build/kotlin-0.11.1393
 
 build/kotlin-0.12.108: build/kotlin-0.11.1393
+	$(call kcheckout,0.12.108)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.12.108 \
-	    && git apply ../patches/kotlin-0.12.108.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -1012,11 +927,8 @@ build/kotlin-0.12.108: build/kotlin-0.11.1393
 	    && mv dist/kotlinc ../build/kotlin-0.12.108
 
 build/kotlin-0.12.115: build/kotlin-0.12.108
+	$(call kcheckout,0.12.115)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.12.115 \
-	    && git apply ../patches/kotlin-0.12.115.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -1047,11 +959,8 @@ build/kotlin-0.12.115: build/kotlin-0.12.108
 	    && mv dist/kotlinc ../build/kotlin-0.12.115
 
 build/kotlin-0.12.176: build/kotlin-0.12.115
+	$(call kcheckout,0.12.176)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.12.176 \
-	    && git apply ../patches/kotlin-0.12.176.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.7/lib dependencies/annotations \
@@ -1082,11 +991,8 @@ build/kotlin-0.12.176: build/kotlin-0.12.115
 	    && mv dist/kotlinc ../build/kotlin-0.12.176
 
 build/kotlin-0.12.470: build/kotlin-0.12.176
+	$(call kcheckout,0.12.470)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.12.470 \
-	    && git apply ../patches/kotlin-0.12.470.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1128,11 +1034,8 @@ build/intellij-community-143: | intellij-community
 	    && mv out ../build/intellij-community-143
 
 build/kotlin-0.12.1077: build/kotlin-0.12.470 build/intellij-community-143
+	$(call kcheckout,0.12.1077)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.12.1077 \
-	    && git apply ../patches/kotlin-0.12.1077.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1166,11 +1069,8 @@ build/kotlin-0.12.1077: build/kotlin-0.12.470 build/intellij-community-143
 	    && mv dist/kotlinc ../build/kotlin-0.12.1077
 
 build/kotlin-0.12.1250: build/kotlin-0.12.1077
+	$(call kcheckout,0.12.1250)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.12.1250 \
-	    && git apply ../patches/kotlin-0.12.1250.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1204,11 +1104,8 @@ build/kotlin-0.12.1250: build/kotlin-0.12.1077
 	    && mv dist/kotlinc ../build/kotlin-0.12.1250
 
 build/kotlin-0.12.1306: build/kotlin-0.12.1250
+	$(call kcheckout,0.12.1306)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.12.1306 \
-	    && git apply ../patches/kotlin-0.12.1306.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1242,11 +1139,8 @@ build/kotlin-0.12.1306: build/kotlin-0.12.1250
 	    && mv dist/kotlinc ../build/kotlin-0.12.1306
 
 build/kotlin-0.13.177: build/kotlin-0.12.1306
+	$(call kcheckout,0.13.177)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.13.177 \
-	    && git apply ../patches/kotlin-0.13.177.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1280,11 +1174,8 @@ build/kotlin-0.13.177: build/kotlin-0.12.1306
 	    && mv dist/kotlinc ../build/kotlin-0.13.177
 
 build/kotlin-0.13.791: build/kotlin-0.13.177
+	$(call kcheckout,0.13.791)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.13.791 \
-	    && git apply ../patches/kotlin-0.13.791.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1318,11 +1209,8 @@ build/kotlin-0.13.791: build/kotlin-0.13.177
 	    && mv dist/kotlinc ../build/kotlin-0.13.791
 
 build/kotlin-0.13.899: build/kotlin-0.13.791
+	$(call kcheckout,0.13.899)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.13.899 \
-	    && git apply ../patches/kotlin-0.13.899.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1356,11 +1244,8 @@ build/kotlin-0.13.899: build/kotlin-0.13.791
 	    && mv dist/kotlinc ../build/kotlin-0.13.899
 
 build/kotlin-0.13.1118: build/kotlin-0.13.899
+	$(call kcheckout,0.13.1118)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.13.1118 \
-	    && git apply ../patches/kotlin-0.13.1118.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1394,11 +1279,8 @@ build/kotlin-0.13.1118: build/kotlin-0.13.899
 	    && mv dist/kotlinc ../build/kotlin-0.13.1118
 
 build/kotlin-0.13.1304: build/kotlin-0.13.1118
+	$(call kcheckout,0.13.1304)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.13.1304 \
-	    && git apply ../patches/kotlin-0.13.1304.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1432,11 +1314,8 @@ build/kotlin-0.13.1304: build/kotlin-0.13.1118
 	    && mv dist/kotlinc ../build/kotlin-0.13.1304
 
 build/kotlin-0.14.209: build/kotlin-0.13.1304
+	$(call kcheckout,0.14.209)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.14.209 \
-	    && git apply ../patches/kotlin-0.14.209.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1470,11 +1349,8 @@ build/kotlin-0.14.209: build/kotlin-0.13.1304
 	    && mv dist/kotlinc ../build/kotlin-0.14.209
 
 build/kotlin-0.14.398: build/kotlin-0.14.209
+	$(call kcheckout,0.14.398)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.14.398 \
-	    && git apply ../patches/kotlin-0.14.398.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1508,11 +1384,8 @@ build/kotlin-0.14.398: build/kotlin-0.14.209
 	    && mv dist/kotlinc ../build/kotlin-0.14.398
 
 build/kotlin-0.15.8: build/kotlin-0.14.398
+	$(call kcheckout,0.15.8)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.15.8 \
-	    && git apply ../patches/kotlin-0.15.8.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1546,11 +1419,8 @@ build/kotlin-0.15.8: build/kotlin-0.14.398
 	    && mv dist/kotlinc ../build/kotlin-0.15.8
 
 build/kotlin-0.15.394: build/kotlin-0.15.8
+	$(call kcheckout,0.15.394)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.15.394 \
-	    && git apply ../patches/kotlin-0.15.394.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
@@ -1585,11 +1455,8 @@ build/kotlin-0.15.394: build/kotlin-0.15.8
 	    && mv dist/kotlinc ../build/kotlin-0.15.394
 
 build/kotlin-0.15.541: build/kotlin-0.15.394
+	$(call kcheckout,0.15.541)
 	cd kotlin \
-	    && git reset --hard \
-	    && git clean -fdx \
-	    && git checkout build-0.15.541 \
-	    && git apply ../patches/kotlin-0.15.541.patch \
 	    && rm -Rf ideaSDK dependencies \
 	    && mkdir -p ideaSDK/lib ideaSDK/core ideaSDK/core-analysis ideaSDK/jps \
 	    && mkdir -p dependencies/ant-1.8/lib dependencies/annotations \
