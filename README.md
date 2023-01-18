@@ -19,7 +19,7 @@ reader.
 
 ## Status
 
-The build works up to Kotlin 1.0.0-beta-2055 (2015-10-28).
+The build works up to Kotlin 1.0.0-beta-3070 (2015-11-13).
 
 
 ## How to build
