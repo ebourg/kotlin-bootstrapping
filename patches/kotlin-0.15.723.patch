@@ -1,0 +1,57 @@
+diff --git a/build.xml b/build.xml
+index 3888820a494..2cb82976ac3 100644
+--- a/build.xml
++++ b/build.xml
+@@ -61,6 +61,7 @@
+ 
+         <fileset dir="${basedir}/lib" includes="**/*.jar"/>
+         <fileset dir="${dependencies.dir}" includes="jansi.jar"/>
++        <fileset dir="${dependencies.dir}" includes="jansi-native.jar"/>
+         <fileset dir="${dependencies.dir}" includes="jline.jar"/>
+         <fileset dir="${dependencies.dir}" includes="cli-parser-1.1.1.jar"/>
+         <fileset dir="${basedir}/ideaSDK/jps" includes="jps-model.jar"/>
+@@ -491,6 +492,8 @@
+                 <zipfileset src="${idea.sdk}/lib/jna-platform.jar"/>
+                 <zipfileset src="${idea.sdk}/lib/oromatcher.jar"/>
+                 <zipfileset src="${idea.sdk}/jps/jps-model.jar"/>
++                <zipfileset src="${dependencies.dir}/jansi.jar"/>
++                <zipfileset src="${dependencies.dir}/jansi-native.jar"/>
+                 <zipfileset src="${dependencies.dir}/jline.jar"/>
+                 <zipfileset src="${dependencies.dir}/cli-parser-1.1.1.jar"/>
+                 <zipfileset src="${protobuf.jar}"/>
+@@ -942,7 +945,7 @@
+             depends="builtins,stdlib,core,reflection,pack-runtime,pack-runtime-sources"/>
+ 
+     <target name="dist"
+-            depends="clean,init,prepare-dist,preloader,runner,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,kotlin-js-stdlib,android-compiler-plugin,kotlinr"
++            depends="clean,init,prepare-dist,preloader,runner,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,android-compiler-plugin,kotlinr"
+             description="Builds redistributables from sources"/>
+ 
+     <target name="dist-quick"
+diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/common/messages/PlainTextMessageRenderer.java b/compiler/cli/src/org/jetbrains/kotlin/cli/common/messages/PlainTextMessageRenderer.java
+index 69873b5ed81..3041512abb6 100644
+--- a/compiler/cli/src/org/jetbrains/kotlin/cli/common/messages/PlainTextMessageRenderer.java
++++ b/compiler/cli/src/org/jetbrains/kotlin/cli/common/messages/PlainTextMessageRenderer.java
+@@ -32,7 +32,7 @@ import static org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity.*
+ public abstract class PlainTextMessageRenderer implements MessageRenderer {
+     // AnsiConsole doesn't check isatty() for stderr (see https://github.com/fusesource/jansi/pull/35).
+     // TODO: investigate why ANSI escape codes on Windows only work in REPL for some reason
+-    private static final boolean COLOR_ENABLED =
++    private static final boolean COLOR_ENABLED = true ||
+             !SystemInfo.isWindows &&
+             CLibrary.isatty(CLibrary.STDERR_FILENO) != 0;
+ 
+diff --git a/libraries/stdlib/src/kotlin/io/ReadWrite.kt b/libraries/stdlib/src/kotlin/io/ReadWrite.kt
+index 0972dcb5ef6..5d85d324fca 100644
+--- a/libraries/stdlib/src/kotlin/io/ReadWrite.kt
++++ b/libraries/stdlib/src/kotlin/io/ReadWrite.kt
+@@ -48,9 +48,6 @@ public fun String.reader(): StringReader = StringReader(this)
+  */
+ public fun BufferedReader.lineSequence(): Sequence<String> = LinesSequence(this).constrainOnce()
+ 
+-@Deprecated("Use lineSequence() instead to avoid conflict with JDK8 lines() method.", ReplaceWith("lineSequence()"))
+-public fun BufferedReader.lines(): Sequence<String> = lineSequence()
+-
+ @Deprecated("Use lineSequence() function which returns Sequence<String>")
+ public fun BufferedReader.lineIterator(): Iterator<String> = lineSequence().iterator()
+ 
