@@ -14,7 +14,11 @@ clean:
 
 # Cleans up the Kotlin source directory, checkouts the specified tag and applies the patch
 define kcheckout
-	cd kotlin && git reset --hard && git clean -fdx && git checkout build-$(1) && git apply ../patches/kotlin-$(1).patch
+	cd kotlin \
+	    && git reset --hard \
+	    && git clean -fdx \
+	    && git checkout build-$(1) \
+	    && if [ -f "../patches/kotlin-$(1).patch" ]; then git apply ../patches/kotlin-$(1).patch; fi
 endef
 
 intellij-community:
