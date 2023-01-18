@@ -28,7 +28,7 @@ The build works up to Kotlin 1.0.0 (2016-02-12).
 
 Prepare the environment with:
 
-    apt install make git openjdk-8-jdk ant ant-contrib libjline2-java libjarjar-java
+    apt install make git openjdk-8-jdk ant ant-contrib libjline2-java libjarjar-java libnative-platform-java
     update-java-alternatives --set java-1.8.0-openjdk-amd64
 
 And then run:
