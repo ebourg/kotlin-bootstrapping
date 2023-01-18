@@ -1,0 +1,43 @@
+diff --git a/build.xml b/build.xml
+index 93ef441b71b3..4dcbb63d4e14 100644
+--- a/build.xml
++++ b/build.xml
+@@ -64,6 +64,7 @@
+ 
+         <fileset dir="${basedir}/lib" includes="**/*.jar"/>
+         <fileset dir="${dependencies.dir}" includes="jansi.jar"/>
++        <fileset dir="${dependencies.dir}" includes="jansi-native.jar"/>
+         <fileset dir="${dependencies.dir}" includes="jline.jar"/>
+         <fileset dir="${dependencies.dir}" includes="cli-parser-1.1.1.jar"/>
+         <fileset dir="${basedir}/ideaSDK/jps" includes="jps-model.jar"/>
+@@ -505,6 +506,8 @@
+                 <zipfileset src="${idea.sdk}/lib/jna-platform.jar"/>
+                 <zipfileset src="${idea.sdk}/lib/oromatcher.jar"/>
+                 <zipfileset src="${idea.sdk}/jps/jps-model.jar"/>
++                <zipfileset src="${dependencies.dir}/jansi.jar"/>
++                <zipfileset src="${dependencies.dir}/jansi-native.jar"/>
+                 <zipfileset src="${dependencies.dir}/jline.jar"/>
+                 <zipfileset src="${dependencies.dir}/cli-parser-1.1.1.jar"/>
+                 <zipfileset src="${protobuf.jar}"/>
+@@ -978,7 +981,7 @@
+             depends="builtins,stdlib,core,reflection,pack-runtime,pack-runtime-sources"/>
+ 
+     <target name="dist"
+-            depends="clean,init,prepare-dist,preloader,runner,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,kotlin.test,pack-kotlin-test,kotlin-js-stdlib,android-compiler-plugin,daemon-client"
++            depends="clean,init,prepare-dist,preloader,runner,serialize-builtins,compiler,compiler-sources,ant-tools,jdk-annotations,android-sdk-annotations,runtime,kotlin.test,pack-kotlin-test,android-compiler-plugin,daemon-client"
+             description="Builds redistributables from sources"/>
+ 
+     <target name="dist-quick"
+diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/common/messages/PlainTextMessageRenderer.java b/compiler/cli/src/org/jetbrains/kotlin/cli/common/messages/PlainTextMessageRenderer.java
+index 69873b5ed814..3041512abb6a 100644
+--- a/compiler/cli/src/org/jetbrains/kotlin/cli/common/messages/PlainTextMessageRenderer.java
++++ b/compiler/cli/src/org/jetbrains/kotlin/cli/common/messages/PlainTextMessageRenderer.java
+@@ -32,7 +32,7 @@ import static org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity.*
+ public abstract class PlainTextMessageRenderer implements MessageRenderer {
+     // AnsiConsole doesn't check isatty() for stderr (see https://github.com/fusesource/jansi/pull/35).
+     // TODO: investigate why ANSI escape codes on Windows only work in REPL for some reason
+-    private static final boolean COLOR_ENABLED =
++    private static final boolean COLOR_ENABLED = true ||
+             !SystemInfo.isWindows &&
+             CLibrary.isatty(CLibrary.STDERR_FILENO) != 0;
+ 
