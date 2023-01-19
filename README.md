@@ -106,3 +106,7 @@ And start the build with:
 | 1.0.0-dev-162   |              |
 | 1.0.0           |              |
 
+
+## Credits
+
+This project includes contributions from Emmanuel Bourg and Julien Lepiller.
